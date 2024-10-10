@@ -1,0 +1,48 @@
+collected 8 items                                                                                                                 
+
+test_sales.py ......FF                                                                                                      [100%]
+
+============================================================ FAILURES ============================================================
+_________________________________________________ test_check_null_missing_column _________________________________________________
+
+    def test_check_null_missing_column():
+        df = pd.DataFrame({
+            'sale_value': [150, 232, 340]
+        })
+        # Retirado coluna de transaction_id (utilizada na função), portanto deve dar erro
+>       with pytest.raises(KeyError):
+E       Failed: DID NOT RAISE <class 'KeyError'>
+
+test_sales.py:69: Failed
+------------------------------------------------------ Captured stdout call ------------------------------------------------------
+Nenhum valor nulo encontrado.
+_________________________________________________ test_check_dups_missing_column _________________________________________________
+
+    def test_check_dups_missing_column():
+        df = pd.DataFrame({
+            'sale_value': [150, 232, 340]
+        })
+        # Retirado coluna de transaction_id (utilizada na função), portanto deve dar erro
+>       with pytest.raises(KeyError):
+E       Failed: DID NOT RAISE <class 'KeyError'>
+
+test_sales.py:77: Failed
+------------------------------------------------------ Captured stdout call ------------------------------------------------------
+Erro: Index(['transaction_id'], dtype='object')
+==================================================== short test summary info =====================================================
+FAILED test_sales.py::test_check_null_missing_column - Failed: DID NOT RAISE <class 'KeyError'>
+FAILED test_sales.py::test_check_dups_missing_column - Failed: DID NOT RAISE <class 'KeyError'>
+================================================== 2 failed, 6 passed in 2.52s ===================================================
+
+
+
+
+**Documente os resultados dos testes e, caso encontre falhas através dos testes, descreva como as corrigiria.**
+
+Foram encontrados 2 falhas na verificação das funções, as falhas ocorreram nos testes de colunas faltantes
+
+No primeiro teste (test_check_null_missing_column), não houve erro nenhum na execução da função por conta do modo que a validação é realizada. 
+Correção: Incluir na função uma validação se pelo menos a coluna utilizada no retorno (transaction_id) está presente no dataframe
+
+No segundo teste (test_check_dups_missing_column), foi apontado falha, porém o retorno da função trouxe um erro de index, justamente no campo faltante (transaction_id). Apesar da função ter caído no except, o erro é "silenciado" mostrando apenas um print do erro, se o erro fosse propagado a função teria passado no teste.
+Correção: adicionar o comando "raise" no except da função.
